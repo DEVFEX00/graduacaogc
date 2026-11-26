@@ -1,0 +1,38 @@
+/* T-092 · página de obrigado (usa estilo.css como base). Dois passos lado a lado no computador, empilhados no celular. */
+.ob-corpo{background:#fff}
+.ob{max-width:1100px;margin:0 auto;padding:22px var(--pad) 48px}
+.ob-marca{display:flex;flex-direction:column;gap:5px;width:56px;margin-bottom:22px}
+.ob-marca span{height:8px;border-radius:3px;background:var(--vesc);align-self:center}
+.ob-marca span:nth-child(1){width:56px}.ob-marca span:nth-child(2){width:36px}.ob-marca span:nth-child(3){width:16px;background:var(--v)}
+.ob h1{font-size:min(9.6vw,3.4rem);font-weight:800;line-height:1.06;letter-spacing:-.035em}
+.ob h1 em{display:block;color:var(--vt)}
+.ob-p{font-size:18px;color:#262A27;margin-top:16px}
+.falhou .ok-txt{display:none!important}
+html:not(.falhou) .falha-txt{display:none!important}
+.ob-passos{display:grid;gap:12px;margin-top:30px}
+.ob-passo{border-radius:var(--r);padding:24px 22px;display:grid;gap:12px;align-content:start}
+.ob-zap{background:var(--vesc);color:#fff}
+.ob-vest{background:var(--nevoa)}
+.ob-r{font-size:14px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--vt)}
+.ob-zap .ob-r{color:var(--v)}
+.ob-txt{font-size:17px}
+.ob-zap .ob-txt{color:#E3E9E5}
+.ob-passo .bt{width:100%;margin-top:4px;padding:0 18px;font-size:16px}
+@media (max-width:420px){.ob-passo .bt i{display:none}}
+.bt-claro{background:var(--vprof);color:#fff}.bt-claro:hover{background:#000}
+.ob-antes{margin-top:8px;background:#fff;border-radius:14px;padding:16px 18px}
+.ob-antes-t{font-size:16px;font-weight:800;margin-bottom:8px}
+.ob-antes li{position:relative;padding-left:24px;font-size:16px;line-height:1.45;margin-top:6px}
+.ob-antes li::before{content:"";position:absolute;left:0;top:.42em;width:14px;height:10px;background:var(--vt);clip-path:polygon(0 0,100% 0,72% 100%,28% 100%)}
+.falhou .ob-passos{max-width:560px}
+.ob-pe{background:var(--preto);color:var(--cz-e);padding:30px var(--pad) calc(24px + env(safe-area-inset-bottom));font-size:15px}
+.ob-pe>p{max-width:1100px;margin:0 auto}
+.ob-pe a{color:#fff;text-underline-offset:3px}
+.ob-pe .assina{max-width:1100px}
+@media (min-width:900px){
+  .ob{padding:56px var(--pad) 90px}
+  .ob-passos{grid-template-columns:1fr 1fr;gap:16px;margin-top:44px}
+  .falhou .ob-passos{grid-template-columns:1fr 1fr;max-width:none}
+  .ob-passo{padding:34px 32px}
+  .ob-passo .bt{width:auto;justify-self:start}
+}
