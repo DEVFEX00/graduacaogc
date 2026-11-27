@@ -1,7 +1,9 @@
 import { receberLead } from '../lib/lead.js';
 
 export default async function handler(req, res) {
-  const request = new Request('https://localhost/api/lead', {
+  const host = req.headers.host;
+  const protocolo = req.headers['x-forwarded-proto'] === 'http' ? 'http' : 'https';
+  const request = new Request(`${protocolo}://${host}/api/lead`, {
     method: req.method,
     body: req.method === 'POST' && req.body != null
       ? (typeof req.body === 'string' ? req.body : JSON.stringify(req.body))

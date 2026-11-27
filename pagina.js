@@ -234,7 +234,7 @@ import { campaignUtm } from './utm.js';
     if (primeiro) { primeiro.el.focus(); medir('form_erro_' + primeiro.nome); return; }
     var nome = $('#f-nome').value.trim().replace(/\s+/g, ' ');
     var lead = { nome: nome.slice(0, 120), email: $('#f-email').value.trim().slice(0, 160), whatsapp: soDigitos(zap.value), interesse: 'Gestão Comercial',
-      pagina: 'Tecnólogo Gestão Comercial', aceite: true, origem: origem };
+      pagina: location.origin + location.pathname, aceite: true, origem: origem };
     try { sessionStorage.setItem('tgc_pn', nome.split(' ')[0].slice(0, 30)); } catch (e) {}
     function ir(sufixo) { enviado = true; location.href = C.obrigado + sufixo; }
     if (!C.destino) { medir('form_envio_ok', { previa: 1 }); ir('?previa=1'); return; }
