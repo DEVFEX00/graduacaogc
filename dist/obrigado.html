@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Seus dados chegaram | Graduação em Gestão Comercial | Faculdade FEX Educação</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<link rel="preload" href="fonts/montserrat-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="img/fex-icone.svg" type="image/svg+xml">
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="obrigado.css">
+<script src="config.js"></script>
+<script src="medicao.js"></script>
+<script>(function (d) { d.className += ' js'; try { var q = new URLSearchParams(location.search); if (q.get('previa')) d.className += ' previa'; if (q.get('e')) d.className += ' falhou'; } catch (e) {} })(document.documentElement);</script>
+</head>
+<body class="ob-corpo">
+<!-- T-092 · obrigado da LP do Tecnólogo em Gestão Comercial (evento de conversão). Dois passos: WhatsApp (tag "Gestão Comercial" no Chat Guru) e vestibular.
+     Com ?e=1 (o envio falhou ou passou de 8 s): não diz "chegaram"; pede o WhatsApp, com a mensagem de falha pronta.
+     O primeiro nome vem do sessionStorage da aba (gravado pelo formulário), é apagado na hora e fica num elemento que o Clarity não grava. -->
+<p class="aviso-previa">Prévia: o formulário ainda não está ligado a nenhum destino. Nada foi enviado.</p>
+<header class="barra">
+  <a class="logo" href="index.html" aria-label="Faculdade FEX Educação, voltar à página"><img src="img/fex-logo-preto.svg" alt="Faculdade FEX Educação" width="132" height="23"></a>
+</header>
+<main class="ob">
+  <section class="ob-topo">
+    <div class="ob-marca" aria-hidden="true"><span></span><span></span><span></span></div>
+    <h1 id="ob-t"><span class="ok-txt">Pronto<span class="nm" data-clarity-mask="True"></span>.</span> <em class="ok-txt">Seus dados chegaram.</em><span class="falha-txt">Quase lá<span class="nm" data-clarity-mask="True"></span>.</span></h1>
+    <p class="ob-p ok-txt">Agora são dois passos, e você pode fazer os dois hoje.</p>
+    <p class="ob-p falha-txt">Seus dados não chegaram até nós por uma falha na conexão. Para não perder a sua vaga no processo, chame a gente no WhatsApp: a mensagem já vai pronta.</p>
+  </section>
+
+  <ol class="ob-passos">
+    <li class="ob-passo ob-zap">
+      <p class="ob-r ok-txt">Passo 1 · Fale com a gente no WhatsApp</p>
+      <p class="ob-txt ok-txt">Uma pessoa do nosso time te recebe, tira as suas dúvidas e acompanha você até a matrícula.</p>
+      <a class="bt" id="ir-zap" href="https://fexeducacao.edu.br/secretaria" rel="noopener">Falar no WhatsApp<i></i></a>
+    </li>
+    <li class="ob-passo ob-vest">
+      <p class="ob-r ok-txt">Passo 2 · Faça o vestibular</p>
+      <p class="ob-txt ok-txt">Uma redação on-line de até 60 minutos. Resultado em até 48 horas.</p>
+      <a class="bt bt-claro" id="ir-vest" href="https://faculdade.fexeducacao.edu.br/processo-seletivo" rel="noopener">Faça o nosso vestibular 2027<i></i></a>
+      <div class="ob-antes ok-txt">
+        <p class="ob-antes-t">Antes de abrir a prova</p>
+        <ul>
+          <li>Separe 60 minutos sem interrupção.</li>
+          <li>Use uma internet estável: depois de aberta, a prova não pode ser pausada nem reiniciada.</li>
+          <li>Deu problema técnico durante a prova? Chame na hora o WhatsApp da secretaria.</li>
+        </ul>
+      </div>
+    </li>
+  </ol>
+</main>
+<footer class="ob-pe">
+  <p>Inscrições até <span data-prazo="inscricoes">10 de dezembro de 2026</span>. Dúvidas: <a href="mailto:secretaria@fexeducacao.edu.br">secretaria@fexeducacao.edu.br</a>.</p>
+  <p class="assina"><span>Faculdade FEX Educação · A faculdade das empresas que ensinam</span><span>#sejaFEX</span></p>
+</footer>
+<script>
+/* links comuns, abertos pelo toque da pessoa (nada de nova aba, de window.open ou de redirecionamento automático).
+   Endereços e mensagens vêm de config.js; a mensagem não leva dado pessoal. */
+(function () {
+  var C = window.CONFIG || {}, falhou = document.documentElement.className.indexOf('falhou') >= 0;
+  var pn = '';
+  try { pn = (sessionStorage.getItem('tgc_pn') || '').replace(/[^A-Za-zÀ-ÖØ-öø-ÿ' -]/g, '').trim().slice(0, 30); sessionStorage.removeItem('tgc_pn'); } catch (e) {}
+  if (pn) Array.prototype.forEach.call(document.querySelectorAll('.nm'), function (s) { s.textContent = ', ' + pn; });
+  var P = C.prazos || {}; Array.prototype.forEach.call(document.querySelectorAll('[data-prazo]'), function (el) { var v = P[el.getAttribute('data-prazo')]; if (v) el.textContent = v; });
+  var zap = document.getElementById('ir-zap'), vest = document.getElementById('ir-vest');
+  var msg = falhou ? (C.mensagemFalha || C.mensagem) : C.mensagem;
+  if (C.whatsapp) zap.href = C.whatsapp + (C.whatsapp.indexOf('?') < 0 ? '?' : '&') + 'text=' + encodeURIComponent(msg || '');
+  if (C.vestibular) vest.href = C.vestibular;
+  zap.addEventListener('click', function () { if (window.MEDICAO) window.MEDICAO.evento('whatsapp_toque', { falhou: falhou ? 1 : 0 }); });
+  vest.addEventListener('click', function () { if (window.MEDICAO) window.MEDICAO.evento('vestibular_toque', { falhou: falhou ? 1 : 0 }); });
+  /* conversão: só quando o envio deu certo (com ?e=1 não houve lead na planilha). Uma vez por visita; não dispara em prévia. Sem dado pessoal. */
+  if (!falhou && window.MEDICAO) window.MEDICAO.conversao({ pagina: 'tgc-gestao-comercial' });
+})();
+</script>
+</body>
+</html>
