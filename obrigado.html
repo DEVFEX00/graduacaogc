@@ -56,7 +56,9 @@
   <p>Inscrições até <span data-prazo="inscricoes">10 de dezembro de 2026</span>. Dúvidas: <a href="mailto:secretaria@fexeducacao.edu.br">secretaria@fexeducacao.edu.br</a>.</p>
   <p class="assina"><span>Faculdade FEX Educação · A faculdade das empresas que ensinam</span><span>#sejaFEX</span></p>
 </footer>
-<script>
+<script type="module">
+import { campaignUtm } from "./utm.js";
+
 /* links comuns, abertos pelo toque da pessoa (nada de nova aba, de window.open ou de redirecionamento automático).
    Endereços e mensagens vêm de config.js; a mensagem não leva dado pessoal. */
 (function () {
@@ -71,8 +73,8 @@
   if (C.vestibular) vest.href = C.vestibular;
   zap.addEventListener('click', function () { if (window.MEDICAO) window.MEDICAO.evento('whatsapp_toque', { falhou: falhou ? 1 : 0 }); });
   vest.addEventListener('click', function () { if (window.MEDICAO) window.MEDICAO.evento('vestibular_toque', { falhou: falhou ? 1 : 0 }); });
-  /* conversão: só quando o envio deu certo (com ?e=1 não houve lead na planilha). Uma vez por visita; não dispara em prévia. Sem dado pessoal. */
-  if (!falhou && window.MEDICAO) window.MEDICAO.conversao({ pagina: 'tgc-gestao-comercial' });
+  /* conversão: só quando o envio deu certo (com ?e=1 nenhum destino confirmou o recebimento). Uma vez por visita; não dispara em prévia. Sem dado pessoal. */
+  if (!falhou && window.MEDICAO) window.MEDICAO.conversao({ pagina: 'tgc-gestao-comercial', ...campaignUtm(location.search) });
 })();
 </script>
 </body>

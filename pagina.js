@@ -1,5 +1,7 @@
+import { campaignUtm } from './utm.js';
+
 /* T-092 v2 · LP do Tecnólogo em Gestão Comercial. Configuração em config.js (só o Caio preenche).
-   Regras: nenhum dado pessoal em endereço, em evento de medição ou em log. Só utm_* ficam guardados, em memória.
+   Regras: nenhum dado pessoal em endereço, em evento de medição ou em log. Os parâmetros UTM ficam guardados na aba durante a visita.
    Exceção pequena e local: o primeiro nome vai para o sessionStorage da própria aba, só para o obrigado dizer "Pronto, Ana.";
    o obrigado lê e apaga na hora, e o nome aparece num elemento que o Clarity não grava (data-clarity-mask). */
 (function () {
@@ -12,13 +14,9 @@
   var C = window.CONFIG || {};
 
   /* ---------- origem (só utm_*) e medição sem dado pessoal ---------- */
-  var origem = {};
-  try {
-    var q = new URLSearchParams(location.search);
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { if (q.get(k)) origem[k] = q.get(k).slice(0, 120); });
-  } catch (e) {}
+  var origem = campaignUtm(location.search);
   function medir(evento, extra) {
-    var d = { utm_content: origem.utm_content || '' };
+    var d = Object.assign({}, origem);
     if (extra) for (var k in extra) d[k] = extra[k];
     if (window.MEDICAO) window.MEDICAO.evento(evento, d);
   }
@@ -241,7 +239,7 @@
     function ir(sufixo) { enviado = true; location.href = C.obrigado + sufixo; }
     if (!C.destino) { medir('form_envio_ok', { previa: 1 }); ir('?previa=1'); return; }
     var botao = $('#enviar'), rotulo = $('span', botao); botao.disabled = true; rotulo.textContent = 'Enviando…';
-    /* regra da casa (Caio, 24/11): a pessoa nunca fica presa no formulário. Se a planilha não responder (destino fora do ar,
+    /* regra da casa (Caio, 24/11): a pessoa nunca fica presa no formulário. Se nenhum destino confirmar o recebimento (destino fora do ar,
        variável não configurada, rede ruim) ou passar de 8 s, ela vai para o obrigado com ?e=1, que pede o WhatsApp. */
     var foi = false;
     function seguir(ok) { if (foi) return; foi = true; if (ok) { medir('form_envio_ok', { previa: 0 }); ir(''); } else { medir('form_erro_envio'); ir('?e=1'); } }
